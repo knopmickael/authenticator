@@ -6,8 +6,6 @@ export class SessionRepository implements SessionRepositoryInterface {
 
   public async store(session: Session): Promise<object | boolean> {
     
-    // model validation goes here
-
     this.sessions.push(session);
 
     if (!this.findByField(session.getId())) {

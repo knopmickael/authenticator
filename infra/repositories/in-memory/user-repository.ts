@@ -6,8 +6,6 @@ export class UserRepository implements UserRepositoryInterface {
 
   public async store(user: User): Promise<object | boolean> {
     
-    // model validation goes here
-
     this.users.push(user);
 
     if (!this.findByField(user.getId())) {

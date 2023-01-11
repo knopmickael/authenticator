@@ -1,8 +1,8 @@
 import { Entity } from "./_entity";
 
 type SessionProps = {
-  token: string,
-  user: string
+  user_id: string,
+  token_id: string
 }
 
 export default class Session extends Entity<SessionProps> {

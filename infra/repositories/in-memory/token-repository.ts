@@ -6,8 +6,6 @@ export class TokenRepository implements TokenRepositoryInterface {
 
   public async store(token: Token): Promise<object | boolean> {
     
-    // model validation goes here
-
     this.tokens.push(token);
 
     if (!this.findByField(token.getId())) {
