@@ -1,4 +1,4 @@
-import { Entity } from "./entity";
+import { Entity } from "./_entity";
 
 type SessionProps = {
   token: string,
