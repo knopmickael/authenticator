@@ -19,7 +19,12 @@ export class Register {
     protected sessionRepo: SessionRepository
   ) {}
 
-  protected generateModels(body: ExpectedBody) {
+  protected async validateBody(body: ExpectedBody): Promise<any | boolean> {
+    // validation goes here...
+    return body;
+  }
+
+  protected generateModels(body: any): any | boolean {
 
     let user: User;
     try {
@@ -27,8 +32,7 @@ export class Register {
     } catch (error) {
       throw new Error("Error while creating the user.");
     }
-    if (!user)
-      throw new Error("User not created.");
+    if (!user) throw new Error("User not created.");
 
     let token: Token;
     try {
@@ -39,46 +43,72 @@ export class Register {
     } catch (error) {
       throw new Error("Error while creating the token.");
     }
-    if (!token)
-      throw new Error("Token not created.");
+    if (!token) throw new Error("Token not created.");
 
     let session: Session;
     try {
       session = Session.build({
         user_id: user.getId(),
-        token_id: token.getId()
+        token_id: token.getId(),
       });
     } catch (error) {
       throw new Error("Error while creating the session.");
     }
-    if (!session)
-      throw new Error("Session not created.");
+    if (!session) throw new Error("Session not created.");
 
     return {
       user: user,
       token: token,
-      session: session
+      session: session,
     };
   }
-  
-  protected persistModels() {
+
+  protected async persistModels({ user, token, session }: any): Promise<boolean> {
+
+    let storedUser;
+    try {
+      storedUser = await this.userRepo.store(user);
+    } catch (error) {
+      throw new Error("Error while storing the user to database.");
+    }
+    if (!storedUser) throw new Error("User not stored.");
+
+    let storedToken;
+    try {
+      storedToken = await this.tokenRepo.store(token);
+    } catch (error) {
+      throw new Error("Error while storing the token to database.");
+    }
+    if (!storedToken) throw new Error("Token not stored.");
+
+    let storedSession;
+    try {
+      storedSession = await this.sessionRepo.store(session);
+    } catch (error) {
+      throw new Error("Error while storing the session to database.");
+    }
+    if (!storedSession) throw new Error("Session not stored.");
+
     return true;
   }
 
-  public exec(body: ExpectedBody): object | boolean {
+  public async exec(body: ExpectedBody): Promise<any | boolean> {
 
-    // validate body here...
+    const validatedBody = await this.validateBody(body);
+    if (!validatedBody) return false;
 
-    const {user, token, session} = this.generateModels(body);
+    const models = this.generateModels(validatedBody);
+    if (!models) return false;
 
-    if (1!=1) return false;
+    const res = await this.persistModels(models);
+    if (!res) return false;
 
     return {
-      name: user.getProps().name,
-      email: user.getProps().email,
-      username: user.getProps().username,
-      token: token.getProps().token,
-      session: session.getId()
+      name: models.user.getProps().name,
+      email: models.user.getProps().email,
+      username: models.user.getProps().username,
+      token: models.token.getProps().token,
+      session: models.session.getId(),
     };
   }
 }

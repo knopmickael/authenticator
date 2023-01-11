@@ -8,17 +8,21 @@ export class UserRepository implements UserRepositoryInterface {
     
     this.users.push(user);
 
-    if (!this.findByField(user.getId())) {
+    if (!this.findByFieldValue(user.getId())) {
       throw new Error("Problems while storing the user.");
     }
 
     return user;
   }
 
-  public async findByField(field: string): Promise<User | object | boolean> {
+  public async findByFieldValue(field: string): Promise<User | object | boolean> {
 
-    const found = this.users.find(user => user.getId() === field);
-    
+    const found = this.users.find(
+      user => user.getId() === field
+      ||
+      Object.values(user.getProps()).indexOf(field) > -1
+    );
+
     if (!found) {
       throw new Error("This id doesn`t belongs to any user.");
     }

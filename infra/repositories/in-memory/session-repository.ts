@@ -8,16 +8,20 @@ export class SessionRepository implements SessionRepositoryInterface {
     
     this.sessions.push(session);
 
-    if (!this.findByField(session.getId())) {
+    if (!this.findByFieldValue(session.getId())) {
       throw new Error("Problems while storing the session.");
     }
 
     return session;
   }
 
-  public async findByField(field: string): Promise<Session | object | boolean> {
+  public async findByFieldValue(field: string): Promise<Session | object | boolean> {
 
-    const found = this.sessions.find(session => session.getId() === field);
+    const found = this.sessions.find(
+      session => session.getId() === field
+      ||
+      Object.values(session.getProps()).indexOf(field) > -1
+    );
     
     if (!found) {
       throw new Error("This id doesn`t belongs to any session.");
