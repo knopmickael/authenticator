@@ -1,6 +1,6 @@
-import Token from "../entities/user";
+import Token from "../entities/token";
 
 export interface TokenRepositoryInterface {
-  store(user: Token): Promise<object | boolean>
+  store(token: Token): Promise<object | boolean>
   findByField(field: string): Promise<Token | object | boolean>
 }

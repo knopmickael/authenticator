@@ -1,6 +1,6 @@
-import Session from "../entities/user";
+import Session from "../entities/session";
 
 export interface SessionRepositoryInterface {
-  store(user: Session): Promise<object | boolean>
+  store(session: Session): Promise<object | boolean>
   findByField(field: string): Promise<Session | object | boolean>
 }
