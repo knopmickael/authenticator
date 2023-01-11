@@ -6,10 +6,10 @@ import Token from "../entities/token";
 import User from "../entities/user";
 
 type ExpectedBody = {
-  name: string;
-  email: string;
-  username: string;
-  password: string;
+  name: string,
+  email: string,
+  username: string,
+  password: string
 };
 
 export class Register {
@@ -32,7 +32,6 @@ export class Register {
     } catch (error) {
       throw new Error("Error while creating the user.");
     }
-    if (!user) throw new Error("User not created.");
 
     let token: Token;
     try {
@@ -43,7 +42,6 @@ export class Register {
     } catch (error) {
       throw new Error("Error while creating the token.");
     }
-    if (!token) throw new Error("Token not created.");
 
     let session: Session;
     try {
@@ -54,7 +52,6 @@ export class Register {
     } catch (error) {
       throw new Error("Error while creating the session.");
     }
-    if (!session) throw new Error("Session not created.");
 
     return {
       user: user,
@@ -71,7 +68,6 @@ export class Register {
     } catch (error) {
       throw new Error("Error while storing the user to database.");
     }
-    if (!storedUser) throw new Error("User not stored.");
 
     let storedToken;
     try {
@@ -79,7 +75,6 @@ export class Register {
     } catch (error) {
       throw new Error("Error while storing the token to database.");
     }
-    if (!storedToken) throw new Error("Token not stored.");
 
     let storedSession;
     try {
@@ -87,7 +82,6 @@ export class Register {
     } catch (error) {
       throw new Error("Error while storing the session to database.");
     }
-    if (!storedSession) throw new Error("Session not stored.");
 
     return true;
   }
