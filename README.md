@@ -8,13 +8,14 @@
   }
 
   token {
-    token,
-    expires_in
+    user_id,
+    token
   }
 
   session {
-    user,
-    token
+    user_id,
+    token_id,
+    expires_in
   }
 
 # Services
