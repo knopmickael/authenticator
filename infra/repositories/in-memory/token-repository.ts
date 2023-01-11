@@ -4,18 +4,17 @@ import { TokenRepositoryInterface } from "../../../src/repositories/token-reposi
 export class TokenRepository implements TokenRepositoryInterface {
   protected tokens: Token[] = [];
 
-  public async store(token: Token): Promise<object | boolean> {
+  public async store(token: Token): Promise<Token> {
     
     this.tokens.push(token);
 
-    if (!this.findByFieldValue(token.getId())) {
+    if (!this.findByFieldValue(token.getId()))
       throw new Error("Problems while storing the token.");
-    }
 
     return token;
   }
 
-  public async findByFieldValue(field: string): Promise<Token | object | boolean> {
+  public async findByFieldValue(field: string): Promise<Token> {
 
     const found = this.tokens.find(
       token => token.getId() === field
@@ -23,9 +22,8 @@ export class TokenRepository implements TokenRepositoryInterface {
       Object.values(token.getProps()).indexOf(field) > -1
     );
     
-    if (!found) {
+    if (!found)
       throw new Error("This id doesn`t belongs to any token.");
-    }
 
     return found;
   }

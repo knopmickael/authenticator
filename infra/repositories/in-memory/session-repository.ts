@@ -4,18 +4,17 @@ import { SessionRepositoryInterface } from "../../../src/repositories/session-re
 export class SessionRepository implements SessionRepositoryInterface {
   protected sessions: Session[] = [];
 
-  public async store(session: Session): Promise<object | boolean> {
+  public async store(session: Session): Promise<Session> {
     
     this.sessions.push(session);
 
-    if (!this.findByFieldValue(session.getId())) {
+    if (!this.findByFieldValue(session.getId()))
       throw new Error("Problems while storing the session.");
-    }
 
     return session;
   }
 
-  public async findByFieldValue(field: string): Promise<Session | object | boolean> {
+  public async findByFieldValue(field: string): Promise<Session> {
 
     const found = this.sessions.find(
       session => session.getId() === field
@@ -23,9 +22,8 @@ export class SessionRepository implements SessionRepositoryInterface {
       Object.values(session.getProps()).indexOf(field) > -1
     );
     
-    if (!found) {
+    if (!found)
       throw new Error("This id doesn`t belongs to any session.");
-    }
 
     return found;
   }

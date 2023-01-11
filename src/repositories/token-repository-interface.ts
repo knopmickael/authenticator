@@ -1,6 +1,6 @@
 import Token from "../entities/token";
 
 export interface TokenRepositoryInterface {
-  store(token: Token): Promise<object | boolean>
-  findByFieldValue(field: string): Promise<Token | object | boolean>
+  store(token: Token): Promise<Token>
+  findByFieldValue(field: string): Promise<Token>
 }
