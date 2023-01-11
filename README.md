@@ -36,7 +36,8 @@
       password
     }
     - expected response {
-      token
+      token,
+      session_id
     }
 
   POST /register
@@ -45,4 +46,11 @@
       email,
       username,
       password
+    }
+    - expected response {
+      name,
+      email,
+      username,
+      token,
+      session_id
     }
