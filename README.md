@@ -17,7 +17,7 @@
     token
   }
 
-# API
+# Services
 
   GET /whoami
     - expected payload {
