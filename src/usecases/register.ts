@@ -62,21 +62,21 @@ export class Register {
 
   protected async persistModels({ user, token, session }: any): Promise<boolean> {
 
-    let storedUser;
+    let storedUser: User;
     try {
       storedUser = await this.userRepo.store(user);
     } catch (error) {
       throw new Error("Error while storing the user to database.");
     }
 
-    let storedToken;
+    let storedToken: Token;
     try {
       storedToken = await this.tokenRepo.store(token);
     } catch (error) {
       throw new Error("Error while storing the token to database.");
     }
 
-    let storedSession;
+    let storedSession: Session;
     try {
       storedSession = await this.sessionRepo.store(session);
     } catch (error) {

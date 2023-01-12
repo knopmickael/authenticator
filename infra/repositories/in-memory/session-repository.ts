@@ -14,6 +14,18 @@ export class SessionRepository implements SessionRepositoryInterface {
     return session;
   }
 
+  public async update(session: Session): Promise<Session> {
+
+    let foundIndex = this.sessions.findIndex(session => session.getId() === session.getId());
+
+    if (foundIndex === -1)
+      throw new Error("This user never had a session on the application.");
+
+    this.sessions[foundIndex] = session;
+
+    return this.sessions[foundIndex];
+  }
+
   public async findByFieldValue(field: string): Promise<Session> {
 
     const found = this.sessions.find(

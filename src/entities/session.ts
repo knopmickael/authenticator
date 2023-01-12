@@ -16,9 +16,16 @@ export default class Session extends Entity<SessionProps> {
     let date = new Date();
     date.setDate(date.getDate() + 1);
 
-    return new  Session({
+    return new Session({
       ...props,
       expires_in: props.expires_in || date // 24 hours
     }, id);
+  }
+
+  public refreshExpirationDate() {
+    
+    let date = new Date();
+    date.setDate(date.getDate() + 2);
+    this.props.expires_in = date;
   }
 }
