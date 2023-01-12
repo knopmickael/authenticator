@@ -93,7 +93,7 @@ export class Login {
       token: token?.getProps()?.token,
       session: {
         id: foundSession?.getId(),
-        expires_in: foundSession?.getProps()?.expires_in
+        expires_in: foundSession?.getProps()?.expires_in // should format to MM-DD-YYYY
       }
     }
   }
