@@ -71,7 +71,7 @@ export class Login {
     // more than 24h have passed since the last generated token
 
     let token;
-    if (!isSessionExpired) {
+    if (isSessionExpired) {
       token = await this.generateNewToken(foundUser?.getId());
       if (token) {
         foundSession?.refreshExpirationDate();

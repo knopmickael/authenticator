@@ -21,21 +21,22 @@ describe('Name of the group', () => {
       sessionInMemoryRepo
     );
 
-    const res = await register.exec({
-      name: "Test name",
-      email: "test@mail.com",
-      username: "test-username",
-      password: "test-password",
+    const input1 = await register.exec({
+      name: "Test name1",
+      email: "test@mail1.com",
+      username: "test-username1",
+      password: "test-password1",
     });
 
-    await register.exec({
+    const input2 = await register.exec({
       name: "Test name2",
       email: "test@mail2.com",
       username: "test-username2",
       password: "test-password2",
     });
 
-    expect(res).toBeTruthy();
+    expect(input1).toBeTruthy();
+    expect(input2).toBeTruthy();
   });
 
   it('should authenticate the user and retrieve his token and current session', async () => {
@@ -47,13 +48,11 @@ describe('Name of the group', () => {
     );
 
     const res = await login.exec({
-      username: "test-username",
-      password: "test-password"
+      username: "test-username1",
+      password: "test-password1"
     });
 
     expect(res).toHaveProperty('token');
     expect(res).toHaveProperty('session');
-
-    console.log(res);
   });
 });
