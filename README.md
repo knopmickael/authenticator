@@ -60,3 +60,4 @@
   - model.field validation
   - jwt token
   - web router
+  - handle exceptions
